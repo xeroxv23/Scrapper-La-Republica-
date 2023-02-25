@@ -1,4 +1,4 @@
-Links = //h2[@class="headline"]/a/@href
-Title = //h2/span/text()
+Links = //div[@class="news V_Title_Img"]//a/@href
+Title = //div/h2/span/text()
 Summary = //div[@class="lead"]/p/text()
 Body = //div[@class="html-content"]/p[not(@class)]/text()

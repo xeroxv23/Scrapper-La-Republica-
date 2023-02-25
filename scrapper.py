@@ -3,10 +3,11 @@ import lxml.html as html
 import os
 import datetime
 
-HOME_URL = 'https://www.larepublica.co/'
 
-XPATH_LINK_TO_ARTICLE = '//*[@data-h="17"]/a/@href'
-XPATH_TITLE = '//h2/span/text()'
+HOME_URL = 'https://www.larepublica.co'
+
+XPATH_LINK_TO_ARTICLE = '//div[@class="news V_Title_Img"]//a/@href'
+XPATH_TITLE='//div/h2/span/text()'
 XPATH_SUMMARY = '//div[@class="lead"]/p/text()'
 XPATH_BODY = '//div[@class="html-content"]/p[not(@class)]/text()'
 
@@ -25,6 +26,9 @@ def parse_notice(link, today):
                 body = parsed.xpath(XPATH_BODY)
             except IndexError:
                 return
+            
+            # Eliminar caracteres no válidos y espacios en blanco al principio y al final del título
+            title = ''.join(char for char in title if char.isalnum() or char in [' ', '.', '-', '_']).strip()
             
             with open(f'{today}/{title}.txt', 'w', encoding='utf-8') as f:
                 f.write(title)
